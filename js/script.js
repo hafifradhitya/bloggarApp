@@ -1,9 +1,10 @@
-/***** Bloggar – NewsAPI integration *****/
+/***** Bloggar – Guardian API integration (client-side friendly) *****/
 
-// === CONFIG ===
-const API_KEY = "44bdc7b07e754cf2a92845309afc2f51";
-const BASE = "https://newsapi.org/v2";
-const COUNTRY = "us";
+/* === CONFIG === */
+const API_KEY = "test"; // ganti dengan key kamu dari Guardian
+const BASE = "https://content.guardianapis.com";
+
+const COUNTRY = "us"; // tidak dipakai langsung oleh Guardian; tetap disimpan untuk kompatibilitas UI
 
 // Limits
 const LATEST_LIMIT   = 10;  // breaking
@@ -29,7 +30,7 @@ const rightClose      = document.querySelector(".header-right_close");
 const backTopbtn      = document.querySelector(".back-top-btn");
 const searchBtn       = document.querySelector(".search_bar");
 
-// ===== Helpers =====
+/* ===== Helpers ===== */
 const fetchJSON = async (url) => {
   const res = await fetch(url);
   if (!res.ok) throw new Error(`Request failed: ${res.status}`);
@@ -37,11 +38,8 @@ const fetchJSON = async (url) => {
 };
 
 const encode = encodeURIComponent;
-
-// unik ID per elemen
 const idFor = (section, idx, field) => `${section}-${idx}-${field}`;
 
-// link ke halaman artikel (query string)
 const articleLink = (a) => {
   const q = new URLSearchParams({
     url: a.url || "",
@@ -54,23 +52,49 @@ const articleLink = (a) => {
   return `article.html?${q.toString()}`;
 };
 
-// tanggal singkat
 const fmtDate = (iso) => {
   if (!iso) return "";
   const d = new Date(iso);
   return d.toLocaleDateString("en-US", { year:"numeric", month:"short", day:"2-digit" });
 };
 
-// gambar fallback
 const safeImg = (src, alt = "image") => {
   const defaultImg = "img/no-image-available.jpg";
   const finalSrc = src && src.trim() !== "" ? src : defaultImg;
   return `<img src="${finalSrc}" alt="${alt}" onerror="this.src='${defaultImg}'">`;
 };
 
-// ===== Renderers =====
+/* ===== Guardian-specific helpers ===== */
+// Build Guardian URL with common fields for images & text.
+// show-fields=thumbnail,trailText,byline untuk dapat gambar & ringkasan.
+const gUrl = (path, params = {}) => {
+  const p = new URLSearchParams({
+    "api-key": API_KEY,
+    "show-fields": "thumbnail,trailText,byline",
+    "page-size": 10,
+    ...params,
+  });
+  return `${BASE}/${path}?${p.toString()}`;
+};
 
-// HERO (Gallery) -> 1 besar + 3 lainnya (layout mirip punyamu)
+// Strip HTML tags (Guardian trailText sering berisi HTML)
+const stripHtml = (html = "") => html.replace(/<[^>]+>/g, "");
+
+// Guardian -> NewsAPI-like object agar kompatibel dengan renderer kamu
+const mapGuardian = (results = []) =>
+  results.map(item => ({
+    title: item.webTitle || "Untitled",
+    url: item.webUrl,
+    publishedAt: item.webPublicationDate,
+    urlToImage: item.fields?.thumbnail || "",
+    description: stripHtml(item.fields?.trailText || ""),
+    author: item.fields?.byline || "",
+    source: { name: item.sectionName || "The Guardian" },
+  }));
+
+/* ===== Renderers (tetap, dari kode kamu) ===== */
+
+// HERO (Gallery)
 const renderHero = (articles) => {
   if (!heroGallery) return;
   const items = (articles || []).slice(0, HERO_LIMIT);
@@ -191,7 +215,7 @@ const renderPopular = (articles) => {
   `).join("");
 };
 
-// Category list (left highlights, 20)
+// Category list
 const renderCategory = (articles) => {
   if (!categoryList) return;
   categoryList.innerHTML = articles.map((a, i) => `
@@ -237,65 +261,82 @@ const renderSponsored = (articles) => {
   `).join("");
 };
 
-// ===== Data loaders =====
+/* ===== Data loaders (Guardian) ===== */
 
-// HERO: ambil headline campuran (4)
+// Guardian tidak punya "country=us" seperti NewsAPI. Kita ambil yang terbaru (newest).
 const loadHero = async () => {
-  // Ambil headline general 4 item
-  const url = `${BASE}/top-headlines?country=${COUNTRY}&pageSize=${HERO_LIMIT}&apiKey=${API_KEY}`;
+  const url = gUrl("search", {
+    "order-by": "newest",
+    "page-size": HERO_LIMIT,
+    "q": "", // headline campuran
+  });
   const data = await fetchJSON(url);
-  renderHero(data.articles || []);
+  renderHero(mapGuardian(data.response?.results));
 };
 
-// Latest 10
 const loadLatest = async () => {
-  const url = `${BASE}/top-headlines?country=${COUNTRY}&pageSize=${LATEST_LIMIT}&apiKey=${API_KEY}`;
+  const url = gUrl("search", {
+    "order-by": "newest",
+    "page-size": LATEST_LIMIT,
+    "q": "", // breaking terbaru
+  });
   const data = await fetchJSON(url);
-  renderLatest(data.articles || []);
+  renderLatest(mapGuardian(data.response?.results));
 };
 
-// Popular 10 (pakai /everything + popularity)
+// "Popular": pakai relevance terhadap query umum
 const loadPopular = async () => {
-  const q = "news";
-  const url = `${BASE}/everything?q=${encode(q)}&language=en&sortBy=popularity&pageSize=${POPULAR_LIMIT}&apiKey=${API_KEY}`;
+  const url = gUrl("search", {
+    "order-by": "relevance",
+    "page-size": POPULAR_LIMIT,
+    "q": "news",
+  });
   const data = await fetchJSON(url);
-  renderPopular(data.articles || []);
+  renderPopular(mapGuardian(data.response?.results));
 };
 
-// Category 20
+// Pemetaan kategori ke section Guardian
 const normalizeCategory = (cat) => {
   const m = {
-    lifestyle: "general",
-    foods: "general",
-    travel: "general",
+    lifestyle: "lifeandstyle",
+    foods: "lifeandstyle",
+    travel: "travel",
     business: "business",
-    entertainment: "entertainment",
-    general: "general",
-    health: "health",
+    entertainment: "culture",     // Guardian: budaya/hiburan luas
+    general: "",                  // tanpa section -> semua
+    health: "society",            // tidak ada 'health' murni; society sering memuat kesehatan
     science: "science",
-    sports: "sports",
-    technology: "technology"
+    sports: "sport",              // Guardian pakai 'sport' (tanpa 's')
+    technology: "technology",
   };
-  return m[cat?.toLowerCase()] || "general";
+  return m[cat?.toLowerCase()] ?? "";
 };
 
 const loadCategory = async (category = "general") => {
-  const cat = normalizeCategory(category);
-  const url = `${BASE}/top-headlines?country=${COUNTRY}&category=${cat}&pageSize=${CATEGORY_LIMIT}&apiKey=${API_KEY}`;
+  const section = normalizeCategory(category);
+  const params = {
+    "order-by": "newest",
+    "page-size": CATEGORY_LIMIT,
+  };
+  if (section) params.section = section;
+  const url = gUrl("search", params);
   const data = await fetchJSON(url);
-  renderCategory(data.articles || []);
+  renderCategory(mapGuardian(data.response?.results));
 };
 
-// Sponsored 4 (gunakan /everything query tematik agar beda dari highlight)
+// "Sponsored": query tematik dengan relevansi
 const loadSponsored = async () => {
-  // pakai topik umum "technology OR business" agar tampil beda dari kategori kiri
-  const q = '(technology OR business) AND -sports';
-  const url = `${BASE}/everything?q=${encode(q)}&language=en&sortBy=relevancy&pageSize=${SPON_LIMIT}&apiKey=${API_KEY}`;
+  const url = gUrl("search", {
+    "order-by": "relevance",
+    "page-size": SPON_LIMIT,
+    // query sederhana agar beda dengan kategori kiri
+    "q": "technology OR business",
+  });
   const data = await fetchJSON(url);
-  renderSponsored(data.articles || []);
+  renderSponsored(mapGuardian(data.response?.results));
 };
 
-// Search overlay (dibuat dinamis)
+// Search overlay (update ke Guardian)
 const ensureSearchOverlay = () => {
   if (document.getElementById("search-overlay")) return;
   const el = document.createElement("div");
@@ -324,9 +365,15 @@ const ensureSearchOverlay = () => {
     resWrap.innerHTML = "<p>Mencari…</p>";
     try {
       const today = new Date().toISOString().slice(0,10);
-      const url = `${BASE}/everything?q=${encode(q)}&from=${today}&to=${today}&sortBy=popularity&language=en&pageSize=20&apiKey=${API_KEY}`;
+      const url = gUrl("search", {
+        "order-by": "relevance",
+        "page-size": 20,
+        "from-date": today,
+        "to-date": today,
+        "q": q
+      });
       const data = await fetchJSON(url);
-      const articles = data.articles || [];
+      const articles = mapGuardian(data.response?.results);
       resWrap.innerHTML = articles.map((a, i) => `
         <a class="post-card" href="${articleLink(a)}" id="${idFor("search", i, "card")}" style="display:grid;grid-template-columns:120px 1fr;gap:12px;align-items:center;border:1px solid #eef0fc;border-radius:10px;padding:10px;">
           <div class="thumb img-holder" style="--width:4;--height:3;">
@@ -344,7 +391,7 @@ const ensureSearchOverlay = () => {
   };
 };
 
-// ===== Wire up existing UI =====
+/* ===== Wire up existing UI ===== */
 if (navToggle) navToggle.addEventListener("click", () => navMenu.classList.add("show-menu"));
 if (navClose)  navClose.addEventListener("click", () => navMenu.classList.remove("show-menu"));
 if (rightHeader) rightHeader.addEventListener("click", () => headerRightMenu.classList.add("show-right_menu"));
@@ -374,7 +421,7 @@ document.querySelectorAll(".nav_list .nav_link[data-cat]")?.forEach(a => {
   });
 });
 
-// ===== Initial load =====
+/* ===== Initial load ===== */
 (async () => {
   try {
     await Promise.all([
