@@ -12,6 +12,7 @@ const POPULAR_LIMIT  = 10;  // popular
 const CATEGORY_LIMIT = 20;  // category
 const HERO_LIMIT     = 4;   // hero section (1 big + 3 small)
 const SPON_LIMIT     = 4;   // sponsored
+const SIDEBAR_LIMIT  = 3;   // sidebar "our latest news"
 
 // DOM refs
 const latestWrapper = document.getElementById("latest-wrapper");
@@ -20,6 +21,7 @@ const categoryList  = document.getElementById("category-list");
 const heroGallery   = document.getElementById("hero-gallery");
 const sponsorList   = document.getElementById("sponsor-list");
 const tickerText    = document.getElementById("ticker-text");
+const sidebarLatest = document.getElementById("sidebar-latest");
 
 // UI
 const navToggle       = document.querySelector(".nav-menu_toggle");
@@ -102,7 +104,7 @@ const bindHeroCard = (prefix, article, withDesc = false) => {
   setImgById(`${prefix}-img`, article.urlToImage || "");
   setTextById(`${prefix}-badge`, article.source?.name || "News");
 
-  // 🔥 title dipotong
+  // title dipotong
   setTextById(`${prefix}-title`, truncate(article.title, 30));
 
   if (withDesc) {
@@ -136,7 +138,7 @@ const renderHero = (articles = []) => {
   }
 };
 
-// 🔥 Breaking News (updated truncate)
+// Breaking News (Swiper)
 const renderLatest = (articles = []) => {
   if (!latestWrapper) return;
   latestWrapper.innerHTML = articles.map((a, i) => `
@@ -173,6 +175,30 @@ const renderLatest = (articles = []) => {
       }
     });
   }
+};
+
+// 🔥 Sidebar "our latest news"
+const renderSidebarLatest = (articles = []) => {
+  if (!sidebarLatest) return;
+
+  const items = articles.slice(0, SIDEBAR_LIMIT);
+  sidebarLatest.innerHTML = items.map((a, i) => `
+    <div class="post_box" id="${idFor("side", i, "card")}">
+      <div class="img-banner" id="${idFor("side", i, "image")}">
+        ${safeImg(a.urlToImage, "Sidebar latest")}
+      </div>
+      <div class="post_content">
+        <span class="date" id="${idFor("side", i, "date")}">
+          ${fmtDate(a.publishedAt)}
+        </span>
+        <a href="${articleLink(a)}"
+           class="post_title"
+           id="${idFor("side", i, "title")}">
+          ${truncate(a.title || "Untitled", 55)}
+        </a>
+      </div>
+    </div>
+  `).join("");
 };
 
 // Popular
@@ -285,7 +311,13 @@ const loadHero = async () => {
 const loadLatest = async () => {
   const url = `${BASE}/top-headlines?country=${COUNTRY}&pageSize=${LATEST_LIMIT}&apiKey=${API_KEY}`;
   const data = await fetchJSON(url);
-  renderLatest(data.articles || []);
+  const articles = (data.articles || []);
+
+  // Breaking News Swiper
+  renderLatest(articles);
+
+  // 🔥 Sidebar "our latest news"
+  renderSidebarLatest(articles);
 };
 
 const loadPopular = async () => {

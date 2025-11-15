@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Category — Bloggar News Magazine</title>
+
+  <!-- Vendor -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css"/>
+  <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/futura-pt" />
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet"/>
+
+  <!-- Styles (pakai style.css kamu yang sama) -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body id="top">
+  <header class="header">
+    <div class="container">
+      <div class="header-top">
+        <div class="header-top_contact">
+          <span class="header-top_btn">New Update</span>
+          <div class="header-top_text" id="ticker-text">
+            Browse news by category on Bloggar
+          </div>
+        </div>
+        <ul class="header-top_social">
+          <li><a href="#"><i class='bx bxl-facebook'></i></a></li>
+          <li><a href="#"><i class='bx bxl-twitter'></i></a></li>
+          <li><a href="#"><i class='bx bxl-instagram'></i></a></li>
+          <li><a href="#"><i class='bx bxl-google-plus'></i></a></li>
+        </ul>
+      </div>
+
+      <nav class="header-navbar">
+        <button class="nav-menu_toggle" aria-label="Open menu">
+          <span class="line"></span><span class="line"></span><span class="line"></span>
+        </button>
+
+        <a href="index.html" class="logo">
+          <img src="img/logo.png" alt="Bloggar" style="width:200px; height:auto;">
+        </a>
+
+        <div class="nav_menu" aria-hidden="true">
+          <button class="nav-menu_close" aria-label="Close menu">
+            <i class="bx bx-x"></i>
+          </button>
+          <ul class="nav_list">
+            <li><a href="index.html?cat=general" class="nav_link" data-cat="general">Home</a></li>
+            <li><a href="category.html?cat=business"      class="nav_link">Business</a></li>
+            <li><a href="category.html?cat=entertainment" class="nav_link">Entertainment</a></li>
+            <li><a href="category.html?cat=health"        class="nav_link">Health</a></li>
+            <li><a href="category.html?cat=science"       class="nav_link">Science</a></li>
+            <li><a href="category.html?cat=sports"        class="nav_link">Sports</a></li>
+            <li><a href="category.html?cat=technology"    class="nav_link">Technology</a></li>
+          </ul>
+        </div>
+
+        <div class="header_actions">
+          <button class="search_bar" aria-label="Search"><i class="bx bx-search"></i></button>
+          <button class="right_header-toggle" aria-label="Open right panel">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </nav>
+
+      <div class="header-right" aria-hidden="true">
+        <div class="header-right_top">
+          <a href="index.html" class="logo">
+            <img src="img/logo-footer.png" alt="Bloggar Footer Logo">
+          </a>
+          <button class="header-right_close" aria-label="Close right panel">
+            <i class='bx bx-x'></i>
+          </button>
+        </div>
+
+        <div class="header-right_sec">
+          <h3 class="header-right_title">our latest news</h3>
+
+          <!-- 🔥 Sidebar latest (dinamis dari API) -->
+          <div class="posts-list grid" id="sidebar-latest"></div>
+
+          <h3 class="header-right_title">contact us</h3>
+          <ul class="content-list grid">
+            <li class="contact_item">
+              <div class="contact_icon"><i class='bx bxs-map'></i></div>
+              <p class="contact_address">
+                68D, Belsion Town 2365<br>Fna city, LH 3656, USA
+              </p>
+            </li>
+            <li class="contact_item">
+              <div class="contact_icon"><i class='bx bxs-phone'></i></div>
+              <p class="contact_address">
+                +8 (123) 123 456 789<br>+8 (123) 123 456 789
+              </p>
+            </li>
+            <li class="contact_item">
+              <div class="contact_icon"><i class='bx bxs-envelope'></i></div>
+              <p class="contact_address">Bloggar@mail.com</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO KATEGORI -->
+    <section class="section">
+      <div class="container">
+        <nav class="breadcrumb">
+        </nav>
+
+        <h1 class="section_title has-before has-after" id="category-title">
+          Category
+        </h1>
+        <p style="margin-top:10px;max-width:640px;">
+          Showing top headlines for this category from the latest news.
+        </p>
+      </div>
+    </section>
+
+    <!-- LIST ARTIKEL KATEGORI -->
+    <section class="section">
+      <div class="container">
+        <!-- pakai class & style yang sama dengan left_highlights -->
+        <div class="left_highlights grid" id="category-grid">
+          <!-- JS akan inject .highlits_item di sini -->
+        </div>
+      </div>
+    </section>
+
+    <a href="#top" class="back-top-btn"><i class='bx bx-up-arrow-alt'></i></a>
+  </main>
+
+  <!-- FOOTER (sama seperti index) -->
+  <footer class="section footer">
+    <div class="container">
+      <div class="footer_container grid">
+        <div class="footer_box">
+          <div class="footer_logo footer_title">
+            <a href="index.html"><img src="img/logo-footer.png" alt=""></a>
+          </div>
+          <p class="footer_text">
+            There are many variations of lorem Ipsum available, but the majority have
+            suffered alteration in some form.
+          </p>
+        </div>
+
+        <div class="footer_box">
+          <div class="footer_title"><h3>Important Link</h3></div>
+          <ul class="footer_link">
+            <li><a href="#">News</a></li>
+            <li><a href="#">Career</a></li>
+            <li><a href="#">Technology</a></li>
+            <li><a href="#">Startups</a></li>
+            <li><a href="#">Gadget</a></li>
+          </ul>
+        </div>
+
+        <div class="footer_box">
+          <div class="footer_title"><h3>Browse by Tag</h3></div>
+          <ul class="tag_list">
+            <li><a href="#">Travel</a></li>
+            <li><a href="#">Business</a></li>
+            <li><a href="#">Lifestyle</a></li>
+            <li><a href="#">Marketing</a></li>
+            <li><a href="#">Medical</a></li>
+            <li><a href="#">Sports</a></li>
+            <li><a href="#">Career</a></li>
+            <li><a href="#">Foods</a></li>
+          </ul>
+        </div>
+
+        <div class="footer_box">
+          <div class="footer_title"><h3>Social Media</h3></div>
+          <ul class="social_list grid">
+            <li><a href="#"><i class='bx bxl-facebook'></i><span class="span">Facebook</span></a></li>
+            <li><a href="#"><i class='bx bxl-twitter'></i><span class="span">Twitter</span></a></li>
+            <li><a href="#"><i class='bx bxl-instagram'></i><span class="span">Instagram</span></a></li>
+            <li><a href="#"><i class='bx bxl-youtube'></i><span class="span">Youtube</span></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="copyright">
+      <div class="container">
+        <p>Copyright &copy; 2025 Bloggar by PI. All Rights Reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
+  <script src="js/category.js"></script>
+</body>
+</html>

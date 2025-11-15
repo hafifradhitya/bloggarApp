@@ -49,13 +49,12 @@
 
           <ul class="nav_list">
             <li><a href="#" class="nav_link active" data-cat="general">Home</a></li>
-            <li><a href="#" class="nav_link" data-cat="lifestyle">Lifestyle</a></li>
-            <li><a href="#" class="nav_link" data-cat="foods">Foods</a></li>
-            <li><a href="#" class="nav_link" data-cat="business">Business</a></li>
-            <li><a href="#" class="nav_link" data-cat="travel">Travel</a></li>
-            <li><a href="#" class="nav_link">Post</a></li>
-            <li><a href="#" class="nav_link">Contact Us</a></li>
-          </ul>
+            <li><a href="category.html?cat=business"      class="nav_link">Business</a></li>
+            <li><a href="category.html?cat=entertainment" class="nav_link">Entertainment</a></li>
+            <li><a href="category.html?cat=health"        class="nav_link">Health</a></li>
+            <li><a href="category.html?cat=science"       class="nav_link">Science</a></li>
+            <li><a href="category.html?cat=sports"        class="nav_link">Sports</a></li>
+            <li><a href="category.html?cat=technology"    class="nav_link">Technology</a></li>
         </div>
         
         <div class="header_actions">
@@ -80,44 +79,8 @@
         <div class="header-right_sec">
           <h3 class="header-right_title">our latest news</h3>
 
-          <div class="posts-list grid" id="sidebar-latest">
-            <!-- Akan diisi JS (opsional), bisa juga dibiarkan statis -->
-            <div class="post_box">
-              <div class="img-banner">
-                <img src="img/post-1.jpg" alt="Post 1">
-              </div>
-              <div class="post_content">
-                <span class="date">19 Jun 2025</span>
-                <a href="article.html" class="post_title">
-                  5 unbelievable secret about choosing right furniture.
-                </a>
-              </div>
-            </div>
-
-            <div class="post_box">
-              <div class="img-banner">
-                <img src="img/post-2.jpg" alt="Post 2">
-              </div>
-              <div class="post_content">
-                <span class="date">22 Jun 2025</span>
-                <a href="article.html" class="post_title">
-                  Best tourism site all over the world.
-                </a>
-              </div>
-            </div>
-
-            <div class="post_box">
-              <div class="img-banner">
-                <img src="img/post-3.jpg" alt="Post 3">
-              </div>
-              <div class="post_content">
-                <span class="date">12 Apr 2025</span>
-                <a href="article.html" class="post_title">
-                  What’s In Trend in Now Women Fashion.
-                </a>
-              </div>
-            </div>
-          </div>
+          <!-- 🔥 Diisi otomatis dari NewsAPI lewat JS -->
+          <div class="posts-list grid" id="sidebar-latest"></div>
 
           <h3 class="header-right_title">contact us</h3>
 
@@ -146,90 +109,90 @@
   
   <main>
 
-   <section class="home">
-  <div class="container">
-    <div class="gallery grid">
-      <!-- HERO 0 (besar kiri) -->
-      <div class="gallery_item">
-        <a id="hero0-link" href="article.html">
-          <div class="img-holder" style="aspect-ratio: 1/1;">
-            <img id="hero0-img" src="img/img-1.jpg" alt="img 1" class="img-cover">
+    <!-- HERO SECTION -->
+    <section class="home">
+      <div class="container">
+        <div class="gallery grid">
+          <!-- HERO 0 (besar kiri) -->
+          <div class="gallery_item">
+            <a id="hero0-link" href="article.html">
+              <div class="img-holder" style="aspect-ratio: 1/1;">
+                <img id="hero0-img" src="img/img-1.jpg" alt="img 1" class="img-cover">
 
-            <div class="gallery_content">
-              <span id="hero0-badge" class="badge secondary">Fashion</span>
-              <h3 id="hero0-title" class="gallery_title">
-                What's In Tren In Women's Fashion Summer?
-              </h3>
-              <p id="hero0-desc" class="gallery_text">
-                You Can customize the view Blog posts...
-              </p>
+                <div class="gallery_content">
+                  <span id="hero0-badge" class="badge secondary">Fashion</span>
+                  <h3 id="hero0-title" class="gallery_title">
+                    What's In Tren In Women's Fashion Summer?
+                  </h3>
+                  <p id="hero0-desc" class="gallery_text">
+                    You Can customize the view Blog posts...
+                  </p>
 
-              <ul class="gallery-info">
-                <li>
-                  <img id="hero0-avatar" src="img/user-1.jpg" alt="">
-                </li>
-                <li><p id="hero0-author">By Robert</p></li>
-                <li><p id="hero0-date">20 Nov 2022</p></li>
-              </ul>
-            </div>
+                  <ul class="gallery-info">
+                    <li>
+                      <img id="hero0-avatar" src="img/user-1.jpg" alt="">
+                    </li>
+                    <li><p id="hero0-author">By Robert</p></li>
+                    <li><p id="hero0-date">20 Nov 2022</p></li>
+                  </ul>
+                </div>
+              </div>
+            </a>
           </div>
-        </a>
+
+          <!-- HERO 1 (kanan atas) -->
+          <div class="gallery_item">
+            <a id="hero1-link" href="article.html">
+              <div class="img-holder">
+                <img id="hero1-img" src="img/img-2.jpg" alt="img 2" class="img-cover">
+
+                <div class="gallery_content">
+                  <span id="hero1-badge" class="badge secondary">Travel</span>
+                  <h3 id="hero1-title" class="gallery_title">
+                    Traveling Makes You More Interesting
+                  </h3>
+                  <ul class="gallery-info">
+                    <li><p id="hero1-author">By Robert</p></li>
+                    <li><p id="hero1-date">20 Nov 2022</p></li>
+                  </ul>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <!-- HERO 2 & 3 (kanan bawah) -->
+          <div class="gallery_item g2">
+            <a id="hero2-link" href="article.html">
+              <div class="img-holder" style="aspect-ratio: 1/1;">
+                <img id="hero2-img" src="img/img-3.jpg" alt="img 3" class="img-cover">
+                <div class="gallery_content">
+                  <span id="hero2-badge" class="badge secondary">Food</span>
+                  <h3 id="hero2-title" class="gallery_title">Top 10 Healthy Food</h3>
+                  <ul class="gallery-info">
+                    <li><p id="hero2-author">By Robert</p></li>
+                    <li><p id="hero2-date">20 Nov 2022</p></li>
+                  </ul>
+                </div>
+              </div>
+            </a>
+
+            <a id="hero3-link" href="article.html">
+              <div class="img-holder" style="aspect-ratio: 1/1;">
+                <img id="hero3-img" src="img/img-4.jpg" alt="img 4" class="img-cover">
+                <div class="gallery_content">
+                  <span id="hero3-badge" class="badge secondary">Business</span>
+                  <h3 id="hero3-title" class="gallery_title">What Makes a Leader?</h3>
+                  <ul class="gallery-info">
+                    <li><p id="hero3-author">By Robert</p></li>
+                    <li><p id="hero3-date">20 Nov 2022</p></li>
+                  </ul>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
       </div>
-
-      <!-- HERO 1 (kanan atas) -->
-      <div class="gallery_item">
-        <a id="hero1-link" href="article.html">
-          <div class="img-holder">
-            <img id="hero1-img" src="img/img-2.jpg" alt="img 2" class="img-cover">
-
-            <div class="gallery_content">
-              <span id="hero1-badge" class="badge secondary">Travel</span>
-              <h3 id="hero1-title" class="gallery_title">
-                Traveling Makes You More Interesting
-              </h3>
-              <ul class="gallery-info">
-                <li><p id="hero1-author">By Robert</p></li>
-                <li><p id="hero1-date">20 Nov 2022</p></li>
-              </ul>
-            </div>
-          </div>
-        </a>
-      </div>
-
-      <!-- HERO 2 & 3 (kanan bawah) -->
-      <div class="gallery_item g2">
-        <a id="hero2-link" href="article.html">
-          <div class="img-holder" style="aspect-ratio: 1/1;">
-            <img id="hero2-img" src="img/img-3.jpg" alt="img 3" class="img-cover">
-            <div class="gallery_content">
-              <span id="hero2-badge" class="badge secondary" id="hero2-badge">Food</span>
-              <h3 id="hero2-title" class="gallery_title" id="hero2-title">Top 10 Healthy Food</h3>
-              <ul class="gallery-info">
-                <li><p id="hero2-author">By Robert</p></li>
-                <li><p id="hero2-date">20 Nov 2022</p></li>
-              </ul>
-            </div>
-          </div>
-        </a>
-
-        <a id="hero3-link" href="article.html">
-          <div class="img-holder" style="aspect-ratio: 1/1;">
-            <img id="hero3-img" src="img/img-4.jpg" alt="img 4" class="img-cover">
-            <div class="gallery_content">
-              <span id="hero3-badge" class="badge secondary" id="hero3-badge">Business</span>
-              <h3 id="hero3-title" class="gallery_title" id="hero3-title">What Makes a Leader?</h3>
-              <ul class="gallery-info">
-                <li><p id="hero3-author">By Robert</p></li>
-                <li><p id="hero3-date">20 Nov 2022</p></li>
-              </ul>
-            </div>
-          </div>
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
-
+    </section>
 
     <!-- Breaking News (Swiper) -->
     <section class="section breaking">
