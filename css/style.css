@@ -468,6 +468,15 @@ p{
     row-gap: 1.5rem;
 }
 
+.gallery .gallery_item:nth-child(1){
+    grid-row: 1 / span 2;
+}
+
+.gallery_item.g2{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
 .gallery_item:last-child{
     display: flex;
     flex-direction: column;

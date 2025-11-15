@@ -10,9 +10,8 @@
   <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/futura-pt" />
   <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet"/>
 
-  <!-- Base styles -->
+  <!-- Styles -->
   <link rel="stylesheet" href="css/style.css" />
-  <!-- Page-specific (dipakai untuk layout/meta/iframe saja) -->
   <link rel="stylesheet" href="css/article.css" />
 </head>
 <body id="top">
@@ -21,13 +20,13 @@
       <div class="header-top">
         <div class="header-top_contact">
           <span class="header-top_btn">New Update</span>
-          <div class="header-top_text">Welcome to Bloggar — read today’s top stories</div>
+          <div class="header-top_text">Read the full story on Bloggar</div>
         </div>
         <ul class="header-top_social">
-          <li><i class='bx bxl-facebook'></i></li>
-          <li><i class='bx bxl-twitter'></i></li>
-          <li><i class='bx bxl-instagram'></i></li>
-          <li><i class='bx bxl-google-plus'></i></li>
+          <li><a href="#"><i class='bx bxl-facebook'></i></a></li>
+          <li><a href="#"><i class='bx bxl-twitter'></i></a></li>
+          <li><a href="#"><i class='bx bxl-instagram'></i></a></li>
+          <li><a href="#"><i class='bx bxl-google-plus'></i></a></li>
         </ul>
       </div>
 
@@ -65,8 +64,12 @@
 
       <div class="header-right" aria-hidden="true">
         <div class="header-right_top">
-          <a href="index.html" class="logo"><img src="img/logo-footer.png" alt="Bloggar Footer Logo"></a>
-          <button class="header-right_close" aria-label="Close right panel"><i class='bx bx-x'></i></button>
+          <a href="index.html" class="logo">
+            <img src="img/logo-footer.png" alt="Bloggar Footer Logo">
+          </a>
+          <button class="header-right_close" aria-label="Close right panel">
+            <i class='bx bx-x'></i>
+          </button>
         </div>
 
         <div class="header-right_sec">
@@ -98,15 +101,15 @@
           <h3 class="header-right_title">contact us</h3>
           <ul class="content-list grid">
             <li class="contact_item">
-              <div class="contact_icon"><i class='bx bxs-map' ></i></div>
-              <p class="contact_address">68D, Belsion Town 2365<br/>Fna city, LH 3656, USA</p>
+              <div class="contact_icon"><i class='bx bxs-map'></i></div>
+              <p class="contact_address">68D, Belsion Town 2365<br>Fna city, LH 3656, USA</p>
             </li>
             <li class="contact_item">
-              <div class="contact_icon"><i class='bx bxs-phone' ></i></div>
-              <p class="contact_address">+8 (123) 123 456 789<br/>+8 (123) 123 456 789</p>
+              <div class="contact_icon"><i class='bx bxs-phone'></i></div>
+              <p class="contact_address">+8 (123) 123 456 789<br>+8 (123) 123 456 789</p>
             </li>
             <li class="contact_item">
-              <div class="contact_icon"><i class='bx bxs-envelope' ></i></div>
+              <div class="contact_icon"><i class='bx bxs-envelope'></i></div>
               <p class="contact_address">Bloggar@mail.com</p>
             </li>
           </ul>
@@ -128,7 +131,7 @@
 
         <div class="article-meta">
           <div class="meta-left">
-            <img src="img/user-2.jpg" class="meta-avatar" alt="Author">
+            <img src="img/user-2.jpg" class="meta-avatar" alt="Author avatar">
             <div class="meta-author-date">
               <span class="meta-author">By Admin</span>
               <span class="meta-date"></span>
@@ -140,16 +143,17 @@
         </div>
 
         <figure class="article-figure img-holder" style="--width: 16; --height: 9;">
-          <img src="img/no-image-available.jpg" alt="Article" class="img-cover">
-          <figcaption></figcaption>
+          <img src="img/no-image-available.jpg" alt="Article image" class="img-cover" id="article-main-image">
+          <figcaption id="article-caption"></figcaption>
         </figure>
       </div>
     </section>
 
-    <!-- HANYA IFRAME: konten lain dihapus -->
     <section class="section article-body">
       <div class="container article-layout grid">
-        <article class="content"></article>
+        <article class="content" id="article-content">
+          <!-- JS akan menambahkan ringkasan dan tombol "Read full article" -->
+        </article>
       </div>
     </section>
 
@@ -163,7 +167,10 @@
           <div class="footer_logo footer_title">
             <a href="index.html"><img src="img/logo-footer.png" alt=""></a>
           </div>
-          <p class="footer_text">There are many variations of lorem Ipsum available, but the majority have suffered alteration in some form.</p>
+          <p class="footer_text">
+            There are many variations of lorem Ipsum available, but the majority have
+            suffered alteration in some form.
+          </p>
         </div>
 
         <div class="footer_box">
@@ -194,10 +201,10 @@
         <div class="footer_box">
           <div class="footer_title"><h3>Social Media</h3></div>
           <ul class="social_list grid">
-            <li><a href="#"><i class='bx bxl-facebook' ></i><span class="span">Facebook</span></a></li>
-            <li><a href="#"><i class='bx bxl-twitter' ></i><span class="span">Twitter</span></a></li>
-            <li><a href="#"><i class='bx bxl-instagram' ></i><span class="span">Instagram</span></a></li>
-            <li><a href="#"><i class='bx bxl-youtube' ></i><span class="span">Youtube</span></a></li>
+            <li><a href="#"><i class='bx bxl-facebook'></i><span class="span">Facebook</span></a></li>
+            <li><a href="#"><i class='bx bxl-twitter'></i><span class="span">Twitter</span></a></li>
+            <li><a href="#"><i class='bx bxl-instagram'></i><span class="span">Instagram</span></a></li>
+            <li><a href="#"><i class='bx bxl-youtube'></i><span class="span">Youtube</span></a></li>
           </ul>
         </div>
       </div>
@@ -211,13 +218,6 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
-  <script>
-    document.addEventListener('click', e => {
-      if (e.target.closest('.copy-link')) {
-        navigator.clipboard.writeText(location.href);
-      }
-    });
-  </script>
   <script src="js/article.js"></script>
 </body>
 </html>
